@@ -197,12 +197,76 @@ public class FlutterSerialPortPlugin implements MethodCallHandler, EventChannel.
   private void writeData(JSONObject obj) {
     try {
       byte[] bytesToSend;
+      int data = 0; //aqui vem o dado: SLOT ou TEMPERATURA
       String command = (String) obj.get("command");
       switch (command) {
 
+
+        case "setDoublet1"://tipo 1
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00,(byte)0xff,(byte)(data),(byte) 0xFF, (byte)0xCA,0x55};
+          mOutputStream.write(bytesToSend, 0, 6);
+        break;
+        case "setDoublet2"://tipo 2
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)data,(byte)(0xFF-(byte)(data)),0x55, (byte)0xAA};
+          mOutputStream.write(bytesToSend, 0, 6);
+        break;
+        case "setDoublet3"://tipo 3
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCA,(byte)(0xFF-(byte)(0xCA)),0x55, (byte)0xAA};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+        case "setDoublet4"://tipo 4
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCA,(byte)(0xFF-(byte)(data)),0x55, (byte)0xAA};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+        case "set1double":
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCA,0x35,0x01, (byte)0xFE};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
         case "setDouble":
-          int slot = Integer.parseInt((String) obj.get("data"));
-          bytesToSend = new byte[]{0x00,0xFF,0xCA,0x00, (byte)(slot),0x00,0x00,(byte) (byte)(slot),0x03, 0x05};
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCA, 0x35, (byte)(data), (byte)(0xFF-(byte)(data))};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+        case "getTemp":
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xDC,0x23,0x55, (byte)0xAA};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+        case "noControlTemp":
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCC,0x33,0x00, (byte)0xFF};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+        case "controlTemp":
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCC,0x33,0x01, (byte)0xFE};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+        case "setTemp":
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCE, 0x31, (byte)(data), (byte)0xFA};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+        case "setTemp2":
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCE, 0x31, (byte)(data), (byte)(0xFF-(byte)(data))};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+        case "setTemp5":
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCE,0x31,0x05, (byte)0xFA};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+        case "checkvalid1"://check is valid 1 - ok
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)(0x78+(byte)(data)),(byte)(0xFF-(byte)(0x78+(byte)(data))),0x55, (byte)0xAA};
+          mOutputStream.write(bytesToSend, 0, 6);
+        break;
+        case "checkvalid2"://check is valid 2
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)(0x78+(byte)(data)),(byte)(0xFF-(0x78+(byte)(data))),0x55};
           mOutputStream.write(bytesToSend, 0, 6);
         break;
         case "statusElevator":
@@ -217,8 +281,8 @@ public class FlutterSerialPortPlugin implements MethodCallHandler, EventChannel.
 
           // getStatusElevator();
 
-          int slot = Integer.parseInt((String) obj.get("data"));
-          bytesToSend = new byte[]{0x02,0x06,0x02,0x00, (byte)(slot),0x00,0x00,(byte) (byte)(slot),0x03, 0x05};
+           data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x02,0x06,0x02,0x00, (byte)(data),0x00,0x00,(byte) (byte)(data),0x03, 0x05};
           mOutputStream.write(bytesToSend, 0, 10);
           
           break;
