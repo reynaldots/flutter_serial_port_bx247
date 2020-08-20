@@ -201,8 +201,54 @@ public class FlutterSerialPortPlugin implements MethodCallHandler, EventChannel.
       String command = (String) obj.get("command");
       switch (command) {
 
+        case "aaaaa1"://ok
+          bytesToSend = new byte[]{0x00, (byte)0xFF ,0x01 ,(byte)0xFE ,0x55 ,(byte)0xAA};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
 
-        case "setDoublet1"://tipo 1
+        case "aaaaa11":
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00, (byte)0xFF ,(byte)(data) ,(byte)0xFE ,0x55 ,(byte)0xAA};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+
+        case "aaaaa2"://ok
+          bytesToSend = new byte[]{0x00 ,(byte)0xFF ,0x01, (byte)0xFE ,(byte)0xAA ,0x55 };
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+        case "aaaaa2testefinal":
+          bytesToSend = new byte[]{0x00 ,(byte)0xFF ,(byte)(data), (byte)(0xFF-(byte)(data)) ,(byte)0xAA ,0x55 };
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+        case "aaaaa22":
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00 ,(byte)0xFF ,(byte)(data), (byte)0xFE ,(byte)0xAA ,0x55 };
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+        case "aaaaa222":
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00, (byte)0xFF, 0x01, (byte)0xFE, (byte)(data), (byte)(0xFF-(byte)(data))};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+        case "aaaaa2223":
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00, (byte)0xFF, 0x01, (byte)(data), (byte)(data), (byte)(0xFF-(byte)(data))};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+        case "aaaaa2224":
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)(data), (byte)0xFE, (byte)(data), (byte)(0xFF-(byte)(data))};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+
+        /*case "setDoublet1"://tipo 1
           data = Integer.parseInt((String) obj.get("data"));
           bytesToSend = new byte[]{0x00,(byte)0xff,(byte)(data),(byte) 0xFF, (byte)0xCA,0x55};
           mOutputStream.write(bytesToSend, 0, 6);
@@ -226,36 +272,123 @@ public class FlutterSerialPortPlugin implements MethodCallHandler, EventChannel.
           data = Integer.parseInt((String) obj.get("data"));
           bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCA,0x35,0x01, (byte)0xFE};
           mOutputStream.write(bytesToSend, 0, 6);
+          break;*/
+
+        case "allSingleSlot"://ok
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCB, 0x34 ,0x55 ,(byte)0xAA};
+          mOutputStream.write(bytesToSend, 0, 6);
           break;
-        case "setDouble":
+
+
+        case "statusDoor"://ok
+        bytesToSend = new byte[]{0x00, (byte)0xFF,(byte) 0xDF ,0x20 ,0x55 ,(byte)0xAA};
+        mOutputStream.write(bytesToSend, 0, 6);
+        break;
+
+
+     /*   case "gateStatusClose":
+          bytesToSend = new byte[]{0x00 ,0x5D ,0x00, 0x00, 0x5D };//close
+          mOutputStream.write(bytesToSend, 0, 5);
+          break;
+        case "doorStatusOpen":
+          bytesToSend = new byte[]{ 0x00 ,0x5D ,0x01 ,0x00 ,0x5E };//open
+          mOutputStream.write(bytesToSend, 0, 5);
+          break;*/
+
+        case "openBuzzer"://????
+          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xDE, 0x21 ,(byte)0xAA ,0x55};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+        case "closeBuzzer"://???????
+          bytesToSend = new byte[]{0x00 ,(byte)0xFF ,(byte)0xDE, 0x21, 0x55 ,(byte)0xAA};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+
+
+        case "glassHeatingOn"://???
+          bytesToSend = new byte[]{0x00, (byte)0xFF ,(byte)0xD4,0x2B ,0x01,(byte) 0xFE};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+        case "glassHeatingOff"://???
+          bytesToSend = new byte[]{0x00 ,(byte)0xFF ,(byte)0xD4 ,0x2B, 0x00 ,(byte)0xFF};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+        case "lightOn"://ok
+          bytesToSend = new byte[]{0x00, (byte)0xFF ,(byte)0xDD ,0x22,(byte)0xAA ,0x55};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+        case "lightOff"://ok
+          bytesToSend = new byte[]{0x00, (byte)0xFF ,(byte)0xDD ,0x22 ,0x55,(byte)0xAA};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+        case "heatingMode"://???
+          bytesToSend = new byte[]{0x00 ,(byte)0xFF ,(byte)0xCD ,0x32 ,0x01 ,(byte)0xFE};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+        case "refriMode"://????
+          bytesToSend = new byte[]{0x00 ,(byte)0xFF ,(byte)0xCD ,0x32 ,0x01 ,(byte)0xFE};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+        case "setDouble"://ok
           data = Integer.parseInt((String) obj.get("data"));
           bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCA, 0x35, (byte)(data), (byte)(0xFF-(byte)(data))};
           mOutputStream.write(bytesToSend, 0, 6);
           break;
+        case "setSingle":
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00 ,(byte)0xFF, (byte)0xC9 ,0x36 ,(byte)(data), (byte)(0xFF-(byte)(data))};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+        case "set1And2Single":
+          data = Integer.parseInt((String) obj.get("data"));
+          bytesToSend = new byte[]{0x00 ,(byte)0xFF, (byte)0xC9 ,0x36 ,0x01, (byte)0xFE};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
         case "getTemp":
           bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xDC,0x23,0x55, (byte)0xAA};
           mOutputStream.write(bytesToSend, 0, 6);
           break;
-        case "noControlTemp":
+        case "noControlTemp"://ok
           bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCC,0x33,0x00, (byte)0xFF};
           mOutputStream.write(bytesToSend, 0, 6);
           break;
-        case "controlTemp":
+        case "controlTemp"://ok
           bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCC,0x33,0x01, (byte)0xFE};
           mOutputStream.write(bytesToSend, 0, 6);
           break;
-        case "setTemp":
-          data = Integer.parseInt((String) obj.get("data"));
-          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCE, 0x31, (byte)(data), (byte)0xFA};
+
+        case "defrostingTimeFor20min"://??
+          bytesToSend = new byte[]{0x00 ,(byte)0xFF ,(byte)0xD1 ,0x2E ,0x14,(byte)0xEB};
           mOutputStream.write(bytesToSend, 0, 6);
           break;
 
-        case "setTemp2":
+        case "120MinutesCompressor":
+          bytesToSend = new byte[]{0x00 ,(byte)0xFF, (byte)0xD2 ,0x2D ,0x78,(byte) 0x87};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+        case "temperatureDifferenceSetTo2"://??
+          bytesToSend = new byte[]{0x00,(byte) 0xFF, (byte)0xCF, 0x30,0x02, (byte)0xFD};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+
+        case "temperatureCompensationSetTo1":///???
+          bytesToSend = new byte[]{0x00 ,(byte)0xFF ,(byte)0xD0 ,0x2F ,0x01, (byte)0xFE};
+          mOutputStream.write(bytesToSend, 0, 6);
+          break;
+
+        case "setTemp"://ok
           data = Integer.parseInt((String) obj.get("data"));
           bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCE, 0x31, (byte)(data), (byte)(0xFF-(byte)(data))};
           mOutputStream.write(bytesToSend, 0, 6);
           break;
-        case "setTemp5":
+        case "setTempTo5"://ok
           bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)0xCE,0x31,0x05, (byte)0xFA};
           mOutputStream.write(bytesToSend, 0, 6);
           break;
@@ -264,22 +397,12 @@ public class FlutterSerialPortPlugin implements MethodCallHandler, EventChannel.
           bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)(0x78+(byte)(data)),(byte)(0xFF-(byte)(0x78+(byte)(data))),0x55, (byte)0xAA};
           mOutputStream.write(bytesToSend, 0, 6);
         break;
-        case "checkvalid2"://check is valid 2
-          data = Integer.parseInt((String) obj.get("data"));
-          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)(0x78+(byte)(data)),(byte)(0xFF-(0x78+(byte)(data))),0x55};
-          mOutputStream.write(bytesToSend, 0, 6);
-        break;
+
         case "statusElevator":
           getStatusElevator();
         break;
         case "shipment":
-          // int slot = Integer.parseInt((String) obj.get("data"));
-          // int adjust = slot + 0 + 0 + 0;
 
-          // bytesToSend = new byte[]{0x02,0x06,0x02,0x00, (byte) slot,0x00,0x00,(byte) adjust,0x03,0x05};
-          // mOutputStream.write(bytesToSend, 0, 10);
-
-          // getStatusElevator();
 
            data = Integer.parseInt((String) obj.get("data"));
           bytesToSend = new byte[]{0x02,0x06,0x02,0x00, (byte)(data),0x00,0x00,(byte) (byte)(data),0x03, 0x05};
@@ -288,7 +411,7 @@ public class FlutterSerialPortPlugin implements MethodCallHandler, EventChannel.
           break;
         case "d":
           String[] range = ((String) obj.get("data")).split("-");
-          //int adjust2 = 5 + 0 + 0 + 0;
+
 
           for (int i = (Integer.parseInt(range[0])); i <= (Integer.parseInt(range[1])); i++) {
             bytesToSend = new byte[]{0x02,0x06,0x02,0x00, (byte)(Integer.parseInt(range[2])),0x00,0x00,(byte) (byte)(Integer.parseInt(range[2])),0x03, (byte)i};

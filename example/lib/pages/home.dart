@@ -114,6 +114,12 @@ class _HomePageState extends State<HomePage> {
                       Text("Baudrate: ${store.baudrate}"),
                       Row(
                         children: <Widget>[
+                           RaisedButton(
+                            child: Text("Clear Text") ,
+                            onPressed:() { _commandController.text = "";},
+                          ),
+                          
+                            SizedBox(width: 8.0),
                           RaisedButton(
                             child: !isPortOpened ? Text("Open") : Text("Close"),
                             onPressed: store.device != null
@@ -169,6 +175,7 @@ class _HomePageState extends State<HomePage> {
                             }
                                 : null,
                           ),
+                          SizedBox(width: 8.0),
                           RaisedButton(
                             child: Text("Status Elevator"),
                             onPressed: store.device != null
