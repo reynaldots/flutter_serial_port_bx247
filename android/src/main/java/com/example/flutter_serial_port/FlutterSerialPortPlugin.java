@@ -398,6 +398,12 @@ public class FlutterSerialPortPlugin implements MethodCallHandler, EventChannel.
           mOutputStream.write(bytesToSend, 0, 6);
         break;
 
+        
+        case "driveBoardStatus":
+          bytesToSend = new byte[]{0x02 ,0x03 ,0x52,0x00 ,0x00,0x03 ,0x03 };
+          mOutputStream.write(bytesToSend, 0, 7);
+          break;
+
         case "statusElevator":
           getStatusElevator();
         break;
@@ -409,6 +415,18 @@ public class FlutterSerialPortPlugin implements MethodCallHandler, EventChannel.
           mOutputStream.write(bytesToSend, 0, 10);
           
           break;
+        case "t"://teste
+          String[] codes = ((String) obj.get("data")).split(",");
+          byte[] bytesToSend2 = new byte[codes.length];
+        
+          for (Integer i = 0; i < codes.length; i++) {            
+              String hex = Integer.toHexString(Integer.parseInt(codes[i]));
+              bytesToSend2[i] =        Byte.parseByte(hex,16);
+          }
+          // bytesToSend = new byte[]{0x02 ,0x03 ,0x52,0x00 ,0x00,0x03 ,0x03 };
+          mOutputStream.write(bytesToSend2, 0, codes.length);
+          break;
+
         case "d":
           String[] range = ((String) obj.get("data")).split("-");
 
@@ -433,7 +451,7 @@ public class FlutterSerialPortPlugin implements MethodCallHandler, EventChannel.
           break;
 
 
-        case "cf"://clearElevatorFault
+        case "clearElevatorFault"://clearElevatorFault
           /*bytesToSend = new byte[]{0x02,0x03,(byte) Integer.parseInt((String) obj.get("data")),0x00, 0x00, 0x03, 0x03};
           mOutputStream.write(bytesToSend, 0, 7);*/
 
@@ -451,7 +469,7 @@ public class FlutterSerialPortPlugin implements MethodCallHandler, EventChannel.
           Thread.sleep(200);
 
           break;
-        case "to"://backElevatorToOrigin
+        case "backElevatorToOrigin"://backElevatorToOrigin
           bytesToSend = new byte[]{0x02, 0x03, 0x05,0x00, 0x00, 0x03, 0x05};
               mOutputStream.write(bytesToSend, 0, 7);
             Thread.sleep(200);
