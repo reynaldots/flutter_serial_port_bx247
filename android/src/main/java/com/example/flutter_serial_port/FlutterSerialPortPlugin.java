@@ -201,51 +201,60 @@ public class FlutterSerialPortPlugin implements MethodCallHandler, EventChannel.
       String command = (String) obj.get("command");
       switch (command) {
 
-        case "aaaaa1"://ok
+        case "withoutElevatorDrop1withoutSensor"://ok
           bytesToSend = new byte[]{0x00, (byte)0xFF ,0x01 ,(byte)0xFE ,0x55 ,(byte)0xAA};
           mOutputStream.write(bytesToSend, 0, 6);
           break;
 
-        case "aaaaa11":
+        case "withoutElevatorDropWithoutSensor"://ok
           data = Integer.parseInt((String) obj.get("data"));
-          bytesToSend = new byte[]{0x00, (byte)0xFF ,(byte)(data) ,(byte)0xFE ,0x55 ,(byte)0xAA};
+          bytesToSend = new byte[]{0x00, (byte)0xFF ,(byte)(data), (byte)(0xFF-(byte)(data)),0x55 ,(byte)0xAA};
           mOutputStream.write(bytesToSend, 0, 6);
           break;
 
-
-        case "aaaaa2"://ok
+        case "withoutElevatorDrop1WithSensor"://ok
           bytesToSend = new byte[]{0x00 ,(byte)0xFF ,0x01, (byte)0xFE ,(byte)0xAA ,0x55 };
           mOutputStream.write(bytesToSend, 0, 6);
           break;
 
-        case "aaaaa2testefinal":
+        case "withoutElevatorDropWithSensor"://sem elevador é esseee!! entrega detectando queda pelo sensor
+          data = Integer.parseInt((String) obj.get("data"));
           bytesToSend = new byte[]{0x00 ,(byte)0xFF ,(byte)(data), (byte)(0xFF-(byte)(data)) ,(byte)0xAA ,0x55 };
           mOutputStream.write(bytesToSend, 0, 6);
           break;
 
-        case "aaaaa22":
-          data = Integer.parseInt((String) obj.get("data"));
-          bytesToSend = new byte[]{0x00 ,(byte)0xFF ,(byte)(data), (byte)0xFE ,(byte)0xAA ,0x55 };
+        case "withoutElevatorTurnAll"://sem elevador - reset command - testa todos os slot girando eles
+          bytesToSend = new byte[]{0x00 ,(byte)0xFF ,0x65, (byte)0x9A ,0x55 ,(byte)0xAA };
           mOutputStream.write(bytesToSend, 0, 6);
           break;
 
-        case "aaaaa222":
-          data = Integer.parseInt((String) obj.get("data"));
-          bytesToSend = new byte[]{0x00, (byte)0xFF, 0x01, (byte)0xFE, (byte)(data), (byte)(0xFF-(byte)(data))};
-          mOutputStream.write(bytesToSend, 0, 6);
-          break;
+        // case "withoutElevatorClearError3"://sem elevador - limpa error 3 n funfiona
+        //   bytesToSend = new byte[]{0x02 ,(byte)0x03 ,0x50, (byte)0x03 ,0x02 ,(byte)0x03,(byte)0x03 };
+        //   mOutputStream.write(bytesToSend, 0, 7);
+        //   break;
 
-        case "aaaaa2223":
-          data = Integer.parseInt((String) obj.get("data"));
-          bytesToSend = new byte[]{0x00, (byte)0xFF, 0x01, (byte)(data), (byte)(data), (byte)(0xFF-(byte)(data))};
-          mOutputStream.write(bytesToSend, 0, 6);
-          break;
+        // case "withoutElevatorClearError"://sem elevador - limpa error n funcoina
+        //   data = Integer.parseInt((String) obj.get("data"));
+        //   bytesToSend = new byte[]{0x00 ,(byte)0xFF ,0x65, (byte)0x9A ,0x55 ,(byte)0xAA };
+        //   mOutputStream.write(bytesToSend, 0, 6);
+        //   break;
 
-        case "aaaaa2224":
-          data = Integer.parseInt((String) obj.get("data"));
-          bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)(data), (byte)0xFE, (byte)(data), (byte)(0xFF-(byte)(data))};
-          mOutputStream.write(bytesToSend, 0, 6);
-          break;
+        // case "aaaaa222":
+        //   data = Integer.parseInt((String) obj.get("data"));
+        //   bytesToSend = new byte[]{0x00, (byte)0xFF, 0x01, (byte)0xFE, (byte)(data), (byte)(0xFF-(byte)(data))};
+        //   mOutputStream.write(bytesToSend, 0, 6);
+        //   break;
+
+        // case "aaaaa2223":
+        //   data = Integer.parseInt((String) obj.get("data"));
+        //   bytesToSend = new byte[]{0x00, (byte)0xFF, 0x01, (byte)(data), (byte)(data), (byte)(0xFF-(byte)(data))};
+        //   mOutputStream.write(bytesToSend, 0, 6);
+
+        // case "aaaaa2224":
+        //   data = Integer.parseInt((String) obj.get("data"));
+        //   bytesToSend = new byte[]{0x00, (byte)0xFF, (byte)(data), (byte)0xFE, (byte)(data), (byte)(0xFF-(byte)(data))};
+        //   mOutputStream.write(bytesToSend, 0, 6);
+        //   break;
 
 
         /*case "setDoublet1"://tipo 1
@@ -282,6 +291,11 @@ public class FlutterSerialPortPlugin implements MethodCallHandler, EventChannel.
 
         case "statusDoor"://ok
         bytesToSend = new byte[]{0x00, (byte)0xFF,(byte) 0xDF ,0x20 ,0x55 ,(byte)0xAA};
+        mOutputStream.write(bytesToSend, 0, 6);
+        break;
+
+        case "closeDoor"://ok
+        bytesToSend = new byte[]{0x02, (byte)0x04,(byte) 0xDF ,0x20 ,0x55 ,(byte)0xAA};
         mOutputStream.write(bytesToSend, 0, 6);
         break;
 
